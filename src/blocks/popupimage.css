@@ -46,7 +46,7 @@
 }
 
 .popup__close-button-image:hover {
-  background-image: url(../images/Close\ IconHover.png);
+  background-image: url(../images/CloseIconHover.png);
 }
 
 @media (max-width: 540px) {

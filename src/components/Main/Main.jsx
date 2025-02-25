@@ -7,8 +7,8 @@ import imageAvatar from "../../images/Avatar.png";
 import editButton from "../../images/VectorEditProfile.png";
 import infoButton from "../../images/editButton.png";
 import addButton from "../../images/AddButton.svg";
-import trash from "../../images/Trash.png";
-import heartIcon from "../../images/heart-icon.png";
+import ImagePopup from "./components/Popup/components/ImagePopup";
+import Card from "./components/Popup/components/Card/Card";
 
 function Main() {
   const cards = [
@@ -29,20 +29,20 @@ function Main() {
       createdAt: "2019-07-05T08:11:58.324Z",
     },
   ];
-  console.log(cards);
-  const [popup, setPopup] = useState(null);
 
+  const [popup, setPopup] = useState(null);
   const [userName, setUserName] = useState("Jacques Cousteau");
   const [userBio, setUserBio] = useState("Explorador");
+  const [selectedCard, setSelectedCard] = useState(null);
   const newCardPopup = { title: "Novo Local", children: <NewCard /> };
   const editProfilePopup = {
     title: "Editar Perfil",
     children: (
       <EditProfile
-        userName={userName} // ✅ Passe userName (valor atual do estado)
-        userBio={userBio} // ✅ Passe userBio (valor atual do estado)
-        setUserName={setUserName} // ✅ PASSE a função setUserName (para atualizar o estado)
-        setUserBio={setUserBio} // ✅ PASSE a função setUserBio (para atualizar o estado)
+        userName={userName}
+        userBio={userBio}
+        setUserName={setUserName}
+        setUserBio={setUserBio}
       />
     ),
   };
@@ -83,7 +83,7 @@ function Main() {
             <h1 className="profile__info-title">Jacques Cousteau</h1>
             <button
               className="profile__info-edit-button"
-              onClick={() => handleOpenPopup(editProfilePopup)} //
+              onClick={() => handleOpenPopup(editProfilePopup)}
             >
               <img src={infoButton} alt="Imagem de um botão de edição" />
             </button>
@@ -93,7 +93,7 @@ function Main() {
         </div>
         <button
           className="profile__add-button"
-          onClick={() => handleOpenPopup(newCardPopup)} //
+          onClick={() => handleOpenPopup(newCardPopup)}
         >
           <img
             src={addButton}
@@ -103,25 +103,20 @@ function Main() {
         </button>
       </div>
       <div className="gallery">
-        <template id="cardTemplate">
-          <div className="card">
-            <img alt="" className="card__image" />
-            <div className="card__erase-container">
-              <button className="card__erase">
-                <img src={trash} alt="Imagem de lixeira para apagar card" />
-              </button>
-            </div>
-            <div className="card__content">
-              <span className="card__title"></span>
-              <img
-                src={heartIcon}
-                alt="Ícone de coração para curtir card"
-                className="card__icon"
-              />
-            </div>
-          </div>
-        </template>
+        {cards.map((card) => (
+          <Card key={card._id} card={card} onCardClick={setSelectedCard} />
+        ))}
       </div>
+      <ImagePopup
+        card={selectedCard}
+        onClose={() => {
+          setSelectedCard(null);
+          console.log(
+            "setSelectedCard(null) foi chamado. selectedCard agora:",
+            selectedCard
+          );
+        }}
+      />
 
       {popup && (
         <Popup onClose={handleClosePopup} title={popup.title}>

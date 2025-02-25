@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../blocks/popup.css"; // Importe o CSS do Popup (se ainda não estiver)
+import "../../../../blocks/popup.css";
 
 export default function Popup(props) {
   const { onClose, title, children, isOpen } = props;
@@ -13,7 +13,7 @@ export default function Popup(props) {
           type="button"
           onClick={onClose}
         />
-        <h3 className="popup__title">{title}</h3> {children}
+        {title && <h3 className="popup__title">{title}</h3>} {children}
       </div>
     </div>
   );

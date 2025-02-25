@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
-import "../../../../../blocks/popup.css"; // Importe o CSS do Popup (se ainda não estiver)
+import "../../../../../blocks/popup.css";
 
 export default function EditProfile(props) {
-  // ✅ Receba setUserName e setUserBio como props também:
   const { userName, userBio, setUserName, setUserBio } = props;
 
   const nameInputRef = useRef(null);
@@ -15,12 +14,8 @@ export default function EditProfile(props) {
     const bioValue = bioInputRef.current.value;
   }
 
-  // ✅ Crie a função handleNameChange:
   function handleNameChange(event) {
-    console.log("handleNameChange foi chamada! Event:", event);
-
     setUserName(event.target.value);
-    console.log(event.target.value);
   }
 
   function handleBioChange(event) {
