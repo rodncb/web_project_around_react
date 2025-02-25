@@ -111,10 +111,6 @@ function Main() {
         card={selectedCard}
         onClose={() => {
           setSelectedCard(null);
-          console.log(
-            "setSelectedCard(null) foi chamado. selectedCard agora:",
-            selectedCard
-          );
         }}
       />
 
