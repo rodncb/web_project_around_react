@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import "../../../../../blocks/popup.css";
+import { useRef } from "react";
+import "../../blocks/popup.css";
 
 export default function EditProfile(props) {
   const { userName, userBio, setUserName, setUserBio } = props;
@@ -9,9 +9,6 @@ export default function EditProfile(props) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-
-    const nameValue = nameInputRef.current.value;
-    const bioValue = bioInputRef.current.value;
   }
 
   function handleNameChange(event) {
@@ -68,3 +65,11 @@ export default function EditProfile(props) {
     </form>
   );
 }
+import PropTypes from "prop-types";
+
+EditProfile.propTypes = {
+  userName: PropTypes.string.isRequired,
+  userBio: PropTypes.string.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  setUserBio: PropTypes.func.isRequired,
+};

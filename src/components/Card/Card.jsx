@@ -1,7 +1,6 @@
-import React from "react";
-import "../../../../../../blocks/gallery.css";
-import trash from "../../../../../../images/Trash.png";
-import heartIcon from "../../../../../../images/heart-icon.png";
+import "../../blocks/gallery.css";
+import trash from "../../images/Trash.png";
+import heartIcon from "../../images/heartIcon.png";
 
 export default function Card(props) {
   const { name, link } = props.card;
@@ -29,3 +28,16 @@ export default function Card(props) {
     </div>
   );
 }
+import PropTypes from "prop-types";
+
+Card.propTypes = {
+  card: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    isLiked: PropTypes.bool,
+    owner: PropTypes.string,
+    createdAt: PropTypes.string,
+  }).isRequired,
+  onCardClick: PropTypes.func.isRequired,
+};

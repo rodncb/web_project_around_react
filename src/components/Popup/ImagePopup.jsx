@@ -1,6 +1,5 @@
-import React from "react";
-import "../../../../../blocks/popupimage.css";
-import "../../../../../blocks/popup.css";
+import "../../blocks/popupimage.css";
+import "../../blocks/popup.css";
 
 export default function ImagePopup(props) {
   const { onClose, card } = props;
@@ -24,3 +23,12 @@ export default function ImagePopup(props) {
     </div>
   );
 }
+import PropTypes from "prop-types";
+
+ImagePopup.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  card: PropTypes.shape({
+    link: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
+};

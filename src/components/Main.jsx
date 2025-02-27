@@ -1,14 +1,14 @@
-import React, { useState } from "react"; // <--- Import useState
-import NewCard from "../Main/components/Popup/components/NewCard";
-import EditProfile from "../Main/components/Popup/components/EditProfile";
-import EditAvatar from "../Main/components/Popup/components/EditAvatar";
-import Popup from "./components/Popup/Popup";
-import imageAvatar from "../../images/Avatar.png";
-import editButton from "../../images/VectorEditProfile.png";
-import infoButton from "../../images/editButton.png";
-import addButton from "../../images/AddButton.svg";
-import ImagePopup from "./components/Popup/components/ImagePopup";
-import Card from "./components/Popup/components/Card/Card";
+import { useState } from "react";
+import NewCard from "./Popup/NewCard";
+import EditProfile from "./Popup/EditProfile";
+import EditAvatar from "./Popup/EditAvatar";
+import Popup from "../components/Popup/Popup";
+import imageAvatar from "../images/avatar.png";
+import editButton from "../images/vectorEditProfile.png";
+import infoButton from "../images/editButton.png";
+import addButton from "../images/addButton.svg";
+import ImagePopup from "./Popup/ImagePopup";
+import Card from "./Card/Card";
 
 function Main() {
   const cards = [
