@@ -4,11 +4,13 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 export default function NewCard() {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
-  const { handleAddPlaceSubmit } = useContext(CurrentUserContext);
+  const { handleAddPlaceSubmit, handleClosePopup } =
+    useContext(CurrentUserContext);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (name && link) {
+      console.log("Enviando dados:", { name, link }); // Debug
       handleAddPlaceSubmit({
         name: name,
         link: link,
@@ -16,6 +18,7 @@ export default function NewCard() {
 
       setName("");
       setLink("");
+      handleClosePopup();
     }
   }
 
@@ -56,11 +59,7 @@ export default function NewCard() {
         <span className="popup__error" id="card-link-error"></span>
       </label>
 
-      <button
-        className="button popup__button"
-        type="submit"
-        disabled={!name || !link}
-      >
+      <button className="popup__button" type="submit" disabled={!name || !link}>
         Salvar
       </button>
     </form>

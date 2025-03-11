@@ -62,11 +62,13 @@ function App() {
     api
       .addCard(data.name, data.link)
       .then((newCard) => {
-        console.log(newCard);
         setCards([newCard, ...cards]);
         setPopup(null);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error("Erro ao adicionar card:", err);
+        // Opcional: adicionar tratamento de erro para o usuário
+      });
   };
   const handleUpdateUser = (data) => {
     api

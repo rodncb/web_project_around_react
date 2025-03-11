@@ -3,7 +3,8 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "../../blocks/popup.css";
 
 export default function EditProfile() {
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+  const { currentUser, handleUpdateUser, handleClosePopup } =
+    useContext(CurrentUserContext);
 
   const [name, setName] = useState(currentUser.name);
   const [description, setDescription] = useState(currentUser.about);
@@ -14,6 +15,7 @@ export default function EditProfile() {
       name,
       about: description,
     });
+    handleClosePopup();
   }
 
   function handleNameChange(event) {
