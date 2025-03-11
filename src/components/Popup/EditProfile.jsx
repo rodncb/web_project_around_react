@@ -1,27 +1,32 @@
-import { useRef } from "react";
+import { useState, useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "../../blocks/popup.css";
 
-export default function EditProfile(props) {
-  const { userName, userBio, setUserName, setUserBio } = props;
+export default function EditProfile() {
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
 
-  const nameInputRef = useRef(null);
-  const bioInputRef = useRef(null);
+  const [name, setName] = useState(currentUser.name);
+  const [description, setDescription] = useState(currentUser.about);
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    handleUpdateUser({
+      name,
+      about: description,
+    });
   }
 
   function handleNameChange(event) {
-    setUserName(event.target.value);
+    setName(event.target.value);
   }
 
-  function handleBioChange(event) {
-    setUserBio(event.target.value);
+  function handleDescriptionChange(event) {
+    setDescription(event.target.value);
   }
 
   return (
     <form
-      className="form__popup" //
+      className="form__popup"
       name="profile-form"
       id="profile-form"
       noValidate
@@ -37,8 +42,7 @@ export default function EditProfile(props) {
           minLength="2"
           maxLength="40"
           required
-          value={userName}
-          ref={nameInputRef}
+          value={name}
           onChange={handleNameChange}
         />
         <span className="popup__input-error" id="profile-name-error"></span>
@@ -53,23 +57,14 @@ export default function EditProfile(props) {
           minLength="2"
           maxLength="200"
           required
-          value={userBio}
-          ref={bioInputRef}
-          onChange={handleBioChange}
+          value={description}
+          onChange={handleDescriptionChange}
         />
         <span className="popup__input-error" id="profile-bio-error"></span>
       </label>
-      <button type="submit" className="popup__button popup__button_disabled">
+      <button type="submit" className="popup__button">
         Salvar
       </button>
     </form>
   );
 }
-import PropTypes from "prop-types";
-
-EditProfile.propTypes = {
-  userName: PropTypes.string.isRequired,
-  userBio: PropTypes.string.isRequired,
-  setUserName: PropTypes.func.isRequired,
-  setUserBio: PropTypes.func.isRequired,
-};

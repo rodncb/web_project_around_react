@@ -1,9 +1,28 @@
 import "../../blocks/gallery.css";
 import trash from "../../images/Trash.png";
 import heartIcon from "../../images/heartIcon.png";
+import PropTypes from "prop-types";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import RemoveCard from "../Popup/RemoveCard";
 
 export default function Card(props) {
-  const { name, link } = props.card;
+  const { handleCardLike, setPopup } = useContext(CurrentUserContext);
+
+  if (!props.card) return null;
+
+  const { name, link, isLiked = false } = props.card;
+  const cardLikedButtonClassName = `card__icon ${
+    isLiked ? "card__icon-liked" : ""
+  }`;
+
+  const handleDeleteClick = () => {
+    setPopup({
+      title: "Deletar card",
+      children: <RemoveCard card={props.card} />,
+    });
+  };
+
   return (
     <div className="card">
       <img
@@ -13,7 +32,7 @@ export default function Card(props) {
         onClick={() => props.onCardClick(props.card)}
       />
       <div className="card__erase-container">
-        <button className="card__erase">
+        <button className="card__erase" onClick={handleDeleteClick}>
           <img src={trash} alt="Imagem de lixeira para apagar card" />
         </button>
       </div>
@@ -22,13 +41,13 @@ export default function Card(props) {
         <img
           src={heartIcon}
           alt="Ícone de coração para curtir card"
-          className="card__icon"
+          className={cardLikedButtonClassName}
+          onClick={() => handleCardLike(props.card)}
         />
       </div>
     </div>
   );
 }
-import PropTypes from "prop-types";
 
 Card.propTypes = {
   card: PropTypes.shape({
@@ -39,5 +58,5 @@ Card.propTypes = {
     owner: PropTypes.string,
     createdAt: PropTypes.string,
   }).isRequired,
-  onCardClick: PropTypes.func.isRequired,
+  onCardClick: PropTypes.func.isRequired, // Mantendo apenas uma vez
 };

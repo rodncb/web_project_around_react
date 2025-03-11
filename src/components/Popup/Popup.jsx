@@ -1,4 +1,5 @@
 import "../../blocks/popup.css";
+import PropTypes from "prop-types";
 
 export default function Popup(props) {
   const { onClose, title, children, isOpen } = props;
@@ -17,7 +18,6 @@ export default function Popup(props) {
     </div>
   );
 }
-import PropTypes from "prop-types";
 
 Popup.propTypes = {
   onClose: PropTypes.func.isRequired,

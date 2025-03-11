@@ -1,65 +1,42 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import NewCard from "./Popup/NewCard";
 import EditProfile from "./Popup/EditProfile";
 import EditAvatar from "./Popup/EditAvatar";
 import Popup from "../components/Popup/Popup";
-// import imageAvatar from "../images/avatar.png";
 import editButton from "../images/vectorEditProfile.png";
 import infoButton from "../images/editButton.png";
 import addButton from "../images/addButton.svg";
 import ImagePopup from "./Popup/ImagePopup";
 import Card from "./Card/Card";
-import { api } from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Main() {
-  const currentUser = useContext(CurrentUserContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [cards, setCards] = useState([]);
-  const [popup, setPopup] = useState(null);
-  const [userName, setUserName] = useState("Jacques Cousteau");
-  const [userBio, setUserBio] = useState("Explorador");
-  const [selectedCard, setSelectedCard] = useState(null);
+function Main({ cards }) {
+  const {
+    currentUser,
+    handleClosePopup,
+    popup,
+    setPopup,
+    handleCardLike,
+    handleCardDelete,
+  } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(err);
-        setIsLoading(false);
-      });
-  }, []);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   if (!currentUser) {
     return <div>Carregando...</div>;
   }
 
-  if (error) {
-    return <div>Erro ao carregar os dados.</div>;
-  }
+  const newCardPopup = {
+    title: "Novo Local",
+    children: <NewCard />,
+  };
 
-  if (isLoading) {
-    return <div>Carregando...</div>;
-  }
-
-  const newCardPopup = { title: "Novo Local", children: <NewCard /> };
   const editProfilePopup = {
     title: "Editar Perfil",
-    children: (
-      <EditProfile
-        userName={userName}
-        userBio={userBio}
-        setUserName={setUserName}
-        setUserBio={setUserBio}
-      />
-    ),
+    children: <EditProfile />,
   };
+
   const editAvatarPopup = {
     title: "Alterar foto do Perfil",
     children: <EditAvatar />,
@@ -67,10 +44,6 @@ function Main() {
 
   function handleOpenPopup(popupToOpen) {
     setPopup(popupToOpen);
-  }
-
-  function handleClosePopup() {
-    setPopup(null);
   }
 
   return (
@@ -117,25 +90,39 @@ function Main() {
           />
         </button>
       </div>
+
       <div className="gallery">
         {cards.map((card) => (
-          <Card key={card._id} card={card} onCardClick={setSelectedCard} />
+          <Card
+            key={card._id}
+            card={card}
+            onCardClick={setSelectedCard}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+          />
         ))}
       </div>
-      <ImagePopup
-        card={selectedCard}
-        onClose={() => {
-          setSelectedCard(null);
-        }}
-      />
+      <ImagePopup card={selectedCard} onClose={() => setSelectedCard(null)} />
 
       {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
+        <Popup onClose={handleClosePopup} title={popup.title} isOpen={!!popup}>
           {popup.children}
         </Popup>
       )}
     </main>
   );
 }
+
+Main.propTypes = {
+  cards: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      likes: PropTypes.array.isRequired,
+      owner: PropTypes.object.isRequired,
+    })
+  ).isRequired,
+};
 
 export default Main;
