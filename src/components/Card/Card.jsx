@@ -1,6 +1,6 @@
 import "../../blocks/gallery.css";
 import trash from "../../images/Trash.png";
-import heartIcon from "../../images/heartIcon.png";
+import heartIcon from "../../images/HeartIcon.png";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";

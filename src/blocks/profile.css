@@ -24,10 +24,11 @@
   background-color: transparent;
 }
 .profile__photo-edit-button:hover {
-  background-image: url(/images/VectorEditProfile.png); /* Caminho ABSOLUTO para public/images */
+  background-image: url(../images/VectorEditProfile.png); /* Primeira letra maiúscula */
   background-repeat: no-repeat;
   background-position: center;
   background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 
 .profile__info {

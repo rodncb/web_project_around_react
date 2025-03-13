@@ -37,7 +37,7 @@
 }
 
 .card__erase:hover {
-  background-image: url(/images/trashHover.png);
+  background-image: url(/images/TrashHover.png);
 }
 
 .card__content {
